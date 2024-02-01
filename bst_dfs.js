@@ -111,56 +111,60 @@ class BST{
         }
         console.log("Height of the tree: "+maxHeight());
     }
-    deleteNoChild(){
-        let node=this.root;
-        if(!node){
-            console.log("Tree Empty");
-            return;
-        }
-        deleteNode(node);
-        function deleteNode(temp){
-            if(temp===null)
-                return null;
-            else if(temp.left===null && temp.right===null){
-                return null;
-            }
-            else{
-                if(temp.left!==null)
-                    temp.left=deleteNode(temp.left);
-                if(temp.right!==null)
-                    temp.right=deleteNode(temp.right);
-                return temp;
-            }
-        }
-        this.inorder();
-    }
-    deleteSingleChild(){
-        let node=this.root;
-        if(!node){
-            console.log("Tree Empty");
-            return;
-        }
-        deleteNode(node);
-        function deleteNode(temp){
-            if(temp===null)
-                return null;
-            else if((temp.left===null && temp.right!==null) || (temp.left!==null && temp.right===null)){
-                if(temp.left!==null){
-                    return deleteNode(temp.left);
-                }
-                else if(temp.right!==null){
-                    return deleteNode(temp.right);
-                }
-                return null;
-            }
-            else{
-                temp.left=deleteNode(temp.left);
-                temp.right=deleteNode(temp.right);
-                return temp;
-            }
-        }
-        this.inorder();
-    }
+    // deleteNoChild(){
+    //     let node=this.root;
+    //     if(!node){
+    //         console.log("Tree Empty");
+    //         return;
+    //     }
+    //     deleteNode(node);
+    //     function deleteNode(temp){
+    //         if(temp===null)
+    //             return null;
+    //         else if(temp.left===null && temp.right===null){
+    //             return null;
+    //         }
+    //         else{
+    //             if(temp.left!==null)
+    //                 temp.left=deleteNode(temp.left);
+    //             if(temp.right!==null)
+    //                 temp.right=deleteNode(temp.right);
+    //             return temp;
+    //         }
+    //     }
+    //     this.inorder();
+    // }
+    // deleteSingleChild(){
+    //     let node=this.root;
+    //     if(!node){
+    //         console.log("Tree Empty");
+    //         return;
+    //     }
+    //     deleteNode(node);
+    //     this.inorder();
+    //     function deleteNode(temp,count=0){
+    //         if(temp===null)
+    //             return null;
+    //         else if((temp.left===null && temp.right!==null) || (temp.left!==null && temp.right===null)){
+    //             if(temp.left!==null){
+    //                 temp.left.hd+=count;
+    //                 return deleteNode(temp.left,count+1);
+    //             }
+    //             else if(temp.right!==null){
+    //                 temp.right.hd-=count;
+    //                 return deleteNode(temp.right,count+1);
+    //             }
+    //             return temp;
+    //         }
+    //         else{
+    //             if(temp.left!=null)
+    //                 temp.left=deleteNode(temp.left);
+    //             if(temp.right!=null)
+    //                 temp.right=deleteNode(temp.right);
+    //         }
+    //         return temp;
+    //     }
+    // }
     leastAncestor(val1, val2) {
         let temp = this.root;
         let left = traverse(val1);
@@ -208,20 +212,51 @@ class BST{
         }
         console.log("Sum ="+sum);
     }
+    deleteNode(val){
+        this.root=this.deleteChild(val,this.root);
+    }
+    deleteChild(val,head){
+        if(head===null)
+            return head;
+        else if(head.data>val)
+            head.left=this.deleteChild(val,head.left);
+        else if(head.data<val)
+            head.right=this.deleteChild(val,head.right);
+        else{
+            if(head.left===null){
+                return head.right;
+            }
+            else if(head.right===null){
+                return head.left;
+            }
+            else{
+                let temp=minimum(head.right);
+                head.data=temp.data;
+                head.right=this.deleteChild(temp.data,head.right);
+            }
+        }
+        function minimum(node){
+            while(node.left!==null){
+                node=node.left;
+            }
+            return node;
+        }
+        return head;
+    }
 }
 
 const obj=new BST();
-var a=[6,4,3,5,2,1,8,9,7];
+var a=[10,6,12,4,8,14,2,5,7,13,17];
 for(let i=0;i<a.length;i++){
     obj.insert(a[i]);
 }
 
 obj.height();
-obj.leastAncestor(2,4);
+obj.leastAncestor(6,4);
 obj.sumOfSingleRoot();
+// obj.inorder();
+// obj.deleteNode(10);
 // obj.vot();
-// obj.deleteNoChild();
-obj.deleteSingleChild();
 // console.log("Inorder");
 // obj.inorder();
 // console.log("Preorder");
