@@ -24,6 +24,7 @@ function time(pass){
         }
     }
     console.log(time);
+    
 }
-let arr=[1,2,4,8,9,3,6]
+let arr=[1,2,4,8,8,9,3,3,6]
 time(arr);
