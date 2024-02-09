@@ -1,4 +1,4 @@
-let string="abcaabacab";
+let string="abcadeababab";
 let sub="ab";
 let test=sub+'$'+string;
 let l=test.length;

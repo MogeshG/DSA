@@ -11,11 +11,10 @@ function rabinKarp(string,sub){
         }
         if(match===hashcode){
             console.log(i+1);
-            i+=sub.length-1;
         }
     }
 }
 
-let s="abcababaabc";
-let ss="ab";
+let s="aaaaaaaaaa";
+let ss="aa";
 rabinKarp(s,ss);
